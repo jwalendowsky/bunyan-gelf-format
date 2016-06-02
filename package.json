@@ -1,0 +1,24 @@
+{
+  "name": "bunyan-gelf-format",
+  "version": "0.0.0",
+  "description": "A stream that formats Bunyan JSON messages to the GELF formats and pipes them to another stream.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwalendowsky/bunyan-gelf-format.git"
+  },
+  "keywords": [
+    "bunyan",
+    "gelf",
+    "format"
+  ],
+  "author": "Jorge Walendowsky Filho",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jwalendowsky/bunyan-gelf-format/issues"
+  },
+  "homepage": "https://github.com/jwalendowsky/bunyan-gelf-format#readme"
+}
