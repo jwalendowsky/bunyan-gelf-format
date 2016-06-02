@@ -4,7 +4,7 @@
   "description": "A stream that formats Bunyan JSON messages to the GELF formats and pipes them to another stream.",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "istanbul test --hook-run-in-context _mocha -- --recursive -R spec"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "bunyan": "^1.8.1",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
+    "istanbul": "^0.4.3",
     "mocha": "^2.5.3",
     "should": "^9.0.0",
     "sinon": "^1.17.4"
