@@ -13,7 +13,8 @@
   "keywords": [
     "bunyan",
     "gelf",
-    "format"
+    "format",
+    "stream"
   ],
   "author": "Jorge Walendowsky Filho",
   "license": "MIT",
