@@ -4,25 +4,26 @@
  * Tests the lib core functionality.
  */
 
-let chai     = require('chai'),
+var chai     = require('chai'),
     sinon    = require('sinon'),
     bunyan   = require('bunyan'),
-    Writable = require('stream').Writable,
-    bunyanGelfFormat = require ('../index.js'),
-    expect = null;
+    bunyanGelfFormat = require ('../index'),
+    expect = null,
+    AssertionStream = require('./assertion-stream');
 
 // Basic test configuration setup.
 expect = chai.expect;
 process.env.A127_ENV = 'test';
 
-describe("core", () => {
 
-  it ("should log a info message with default args and it should be converted to gelf.", done => {
-    let stream = bunyanGelfFormat.createStream({raw : true}),
+describe("core", function () {
+
+  it ("should log a info message with default args and it should be converted to gelf.", function (done) {
+    var stream = bunyanGelfFormat.createStream({raw : true}),
         logger = bunyan.createLogger(
             {name : 'core-logger', streams : [{type: 'raw', stream : stream}]});
 
-    stream.pipe(new Writable({
+    stream.pipe(new AssertionStream({
       objectMode: true,
       write : function (message, encoding, callback) {
         callback(null, message);
@@ -39,12 +40,12 @@ describe("core", () => {
     logger.info('testing core log debug capabilities.');
   });
 
-  it ("should log a info message with default args and format and it should be converted to gelf.", done => {
-    let stream = bunyanGelfFormat.createStream({raw : true}),
+  it ("should log a info message with default args and format and it should be converted to gelf.", function (done) {
+    var stream = bunyanGelfFormat.createStream({raw : true}),
         logger = bunyan.createLogger(
             {name : 'core-logger', streams : [{type: 'raw', stream : stream}]});
 
-    stream.pipe(new Writable({
+    stream.pipe(new AssertionStream({
       objectMode: true,
       write : function (message, encoding, callback) {
         callback(null, message);
@@ -61,12 +62,12 @@ describe("core", () => {
   });
 
 
-  it ("should log a debug message with one additional arg and it should be converted to gelf.", done => {
-    let stream = bunyanGelfFormat.createStream({raw : true}),
+  it ("should log a debug message with one additional arg and it should be converted to gelf.", function (done) {
+    var stream = bunyanGelfFormat.createStream({raw : true}),
         logger = bunyan.createLogger(
             {name : 'core-logger', streams : [{type: 'raw', stream : stream}], level: 10});
 
-    stream.pipe(new Writable({
+    stream.pipe(new AssertionStream({
       objectMode: true,
       write : function (message, encoding, callback) {
         callback(null, message);
@@ -86,13 +87,13 @@ describe("core", () => {
 
 
 
-  it ('should log an error and the stack must be treated.', done => {
-    let stream = bunyanGelfFormat.createStream({raw : true}),
+  it ('should log an error and the stack must be treated.', function (done) {
+    var stream = bunyanGelfFormat.createStream({raw : true}),
         logger = bunyan.createLogger(
             {name : 'core-logger', streams : [{type: 'raw', stream : stream}]}),
         errorThatHappened = null;
 
-    stream.pipe(new Writable({
+    stream.pipe(new AssertionStream({
       objectMode: true,
       write : function (message, encoding, callback) {
         callback(null, message);
@@ -120,13 +121,13 @@ describe("core", () => {
   });
 
 
-  it ('should log an error with no log message and the stack must be treated.', done => {
-    let stream = bunyanGelfFormat.createStream({raw : true}),
+  it ('should log an error with no log message and the stack must be treated.', function (done) {
+    var stream = bunyanGelfFormat.createStream({raw : true}),
         logger = bunyan.createLogger(
             {name : 'core-logger', streams : [{type: 'raw', stream : stream}]}),
         errorThatHappened = null;
 
-    stream.pipe(new Writable({
+    stream.pipe(new AssertionStream({
       objectMode: true,
       write : function (message, encoding, callback) {
         callback(null, message);
@@ -153,16 +154,15 @@ describe("core", () => {
     }
   });
 
-  it ('should log a message and it must be a string, since raw is false.', done => {
-    let stream = bunyanGelfFormat.createStream({raw : false}),
+  it ('should log a message and it must be a string, since raw is false.', function (done) {
+    var stream = bunyanGelfFormat.createStream({raw : false}),
         logger = bunyan.createLogger(
             {name : 'core-logger', streams : [{type: 'raw', stream : stream}]}),
         errorThatHappened = null;
 
-    stream.pipe(new Writable({
+    stream.pipe(new AssertionStream({
       objectMode: true,
       write : function (message, encoding, callback) {
-        console.log(message);
         expect(typeof message).to.equal('string');
         expect(message.indexOf('This is a message.')).to.be.above(-1);
         done();
@@ -172,14 +172,14 @@ describe("core", () => {
     logger.info('This is a message.');
   });
 
-  it ('should log more than one message.', done => {
-    let stream = bunyanGelfFormat.createStream({raw : false}),
+  it ('should log more than one message.', function (done) {
+    var stream = bunyanGelfFormat.createStream({raw : false}),
         logger = bunyan.createLogger(
             {name : 'core-logger', streams : [{type: 'raw', stream : stream}]}),
         errorThatHappened = null,
         messagesCount = 0;
 
-    stream.pipe(new Writable({
+    stream.pipe(new AssertionStream({
       objectMode: true,
       write : function (message, encoding, callback) {
         messagesCount++;
