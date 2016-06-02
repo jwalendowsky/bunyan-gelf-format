@@ -31,7 +31,7 @@ describe("core", function () {
         expect(message.version).to.equal("1.1");
         expect(message.level).to.equal(bunyanGelfFormat.LOG_LEVELS.INFO);
         expect(message.short_message).to.equal('testing core log debug capabilities.');
-        expect(message.facility).to.equal('core-logger');
+        expect(message._facility).to.equal('core-logger');
 
         done();
       }
@@ -52,7 +52,7 @@ describe("core", function () {
 
         expect(message.level).to.equal(bunyanGelfFormat.LOG_LEVELS.INFO);
         expect(message.short_message).to.equal('testing core log debug capabilities for this test.');
-        expect(message.facility).to.equal('core-logger');
+        expect(message._facility).to.equal('core-logger');
 
         done();
       }
@@ -74,7 +74,7 @@ describe("core", function () {
 
         expect(message.level).to.equal(bunyanGelfFormat.LOG_LEVELS.DEBUG);
         expect(message.short_message).to.equal('testing core log debug capabilities.');
-        expect(message.facility).to.equal('core-logger');
+        expect(message._facility).to.equal('core-logger');
         expect(message).to.have.property('_additional');
         expect(message._additional).to.equal('additional field');
 
@@ -97,10 +97,10 @@ describe("core", function () {
       objectMode: true,
       write : function (message, encoding, callback) {
         callback(null, message);
-console.log(message)
+
         expect(message.level).to.equal(bunyanGelfFormat.LOG_LEVELS.ERROR);
         expect(message.short_message).to.equal('Failed to get the resources.');
-        expect(message.facility).to.equal('core-logger');
+        expect(message._facility).to.equal('core-logger');
         expect(message.full_message).to.equal(errorThatHappened.stack);
         expect(message._line).to.equal('119');
 
@@ -134,7 +134,7 @@ console.log(message)
 
         expect(message.level).to.equal(bunyanGelfFormat.LOG_LEVELS.ERROR);
         expect(message.short_message).to.equal('This error happenned within the functionThatThrowsAnotherError.');
-        expect(message.facility).to.equal('core-logger');
+        expect(message._facility).to.equal('core-logger');
         expect(message.full_message).to.equal(errorThatHappened.stack);
         expect(message._line).to.equal('153');
 
