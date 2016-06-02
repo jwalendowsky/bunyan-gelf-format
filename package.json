@@ -1,6 +1,6 @@
 {
   "name": "bunyan-gelf-format",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A stream that formats Bunyan JSON messages to the GELF formats and pipes them to another stream.",
   "main": "index.js",
   "scripts": {
